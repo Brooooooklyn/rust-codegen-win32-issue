@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [master, develop]
+    tags-ignore:
+      - '**'
+  pull_request:
+
+jobs:
+  build-win32-ia686:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+
+      - name: Install i686 toolchain
+        run: rustup target add i686-pc-windows-msvc
+
+      - name: Cross build i686
+        run: cargo run --release --target i686-pc-windows-msvc
