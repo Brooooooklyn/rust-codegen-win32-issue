@@ -8,7 +8,8 @@ mod ffi {
   }
 }
 
-fn main() {
+#[no_mangle]
+extern "C" fn rust_concat_string() {
   let a = CString::new(" world!").expect("Init CString failed");
   let out = unsafe { ffi::concat_string(a.as_ptr()) };
   let out_str = unsafe { CStr::from_ptr(out) };

@@ -24,4 +24,10 @@ jobs:
         run: rustup target add i686-pc-windows-msvc
 
       - name: Cross build i686
-        run: cargo run --release --target i686-pc-windows-msvc
+        run: cargo build --release --target i686-pc-windows-msvc
+
+      - name: Test
+        run: |
+          cc ./c-bin/main.c ./target/i686-pc-windows-msvc/release/rust_codegen_win32.dll -o main.exe
+          ls
+          .\main.exe
